@@ -1,16 +1,34 @@
 ---
+import Header from '../components/Header.astro';
+import ResourceTable from '../components/ResourceTable.astro';
+import Sidebar from '../components/Sidebar.astro';
+import { resources } from '../data/archive';
+import BaseLayout from '../layouts/BaseLayout.astro';
 ---
 
-<html lang="en">
-	<head>
-		<meta charset="utf-8" />
-		<link rel="icon" type="image/svg+xml" href="/favicon.svg" />
-		<link rel="icon" href="/favicon.ico" />
-		<meta name="viewport" content="width=device-width" />
-		<meta name="generator" content={Astro.generator} />
-		<title>Astro</title>
-	</head>
-	<body>
-		<h1>Astro</h1>
-	</body>
-</html>
+<BaseLayout
+  title="MegaDocs"
+  description="Past exam notes organized across four grades, four terms, and nine subjects."
+>
+  <Header />
+
+  <div class="app-shell" id="top">
+    <Sidebar />
+
+    <main class="content">
+      <article class="document">
+        <section class="intro" aria-labelledby="pageTitle">
+          <h1 id="pageTitle">Grade 11 — Term 4</h1>
+          <p id="pageDescription">Revision notes for this exam term.</p>
+        </section>
+
+        <ResourceTable resources={resources} />
+      </article>
+    </main>
+
+  </div>
+
+  <div class="scrim" id="scrim" hidden></div>
+
+  <script src="../scripts/archive.ts"></script>
+</BaseLayout>

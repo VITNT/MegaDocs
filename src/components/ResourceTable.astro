@@ -1,0 +1,57 @@
+---
+import type { Resource } from '../data/archive';
+
+interface Props {
+  resources: Resource[];
+}
+
+const { resources } = Astro.props;
+---
+
+<section class="section" aria-labelledby="resourcesTitle">
+  <div class="section-heading">
+    <h2 id="resourcesTitle">Available resources</h2>
+    <span id="resourceCount">2 documents</span>
+  </div>
+
+  <div class="resource-table" id="resourceList">
+    <div class="resource-head">
+      <span>Document</span>
+      <span>Summary</span>
+    </div>
+
+    {
+      resources.map((resource) => (
+        <a
+          class="resource-row"
+          href={resource.href}
+          target="_blank"
+          rel="noreferrer"
+          data-grade={resource.grade}
+          data-term={resource.term}
+          data-title={`${resource.grade} ${resource.term} ${resource.title} ${resource.type} ${resource.description} ${resource.subject}`}
+        >
+          <span class="resource-name">
+            <svg viewBox="0 0 24 24" aria-hidden="true">
+              <path d="M7 3h7l4 4v14H7zM14 3v5h5"></path>
+            </svg>
+            <span>
+              <strong>{resource.title}</strong>
+              <small>{resource.type} · {resource.subject}</small>
+            </span>
+          </span>
+
+          <span class="resource-summary">
+            {resource.description}
+            <b>Open ↗</b>
+          </span>
+        </a>
+      ))
+    }
+  </div>
+
+  <div class="empty-state" id="emptyState" hidden>
+    <h3>No notes available</h3>
+    <p>This section is ready when notes are added.</p>
+  </div>
+</section>

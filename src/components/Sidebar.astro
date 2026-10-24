@@ -1,0 +1,50 @@
+---
+import { grades, terms } from '../data/archive';
+
+const initialGrade = 'Grade 11';
+const initialTerm = 'Term 4';
+---
+
+<aside class="sidebar" id="sidebar">
+  <div class="side-scroll">
+    <p class="side-title">Exam archive</p>
+
+    <nav aria-label="Grade navigation">
+      {
+        grades.map((grade) => {
+          const isOpen = grade === initialGrade;
+
+          return (
+            <section class="grade-group">
+              <button
+                class:list={['grade-button', { active: isOpen }]}
+                data-grade={grade}
+                aria-expanded={String(isOpen)}
+              >
+                <span>{grade}</span>
+                <svg viewBox="0 0 20 20" aria-hidden="true">
+                  <path d="m5 7 5 5 5-5"></path>
+                </svg>
+              </button>
+
+              <div class="term-list">
+                {terms.map((term) => (
+                  <button
+                    class:list={[
+                      'term-button',
+                      { active: isOpen && term === initialTerm },
+                    ]}
+                    data-grade={grade}
+                    data-term={term}
+                  >
+                    {term}
+                  </button>
+                ))}
+              </div>
+            </section>
+          );
+        })
+      }
+    </nav>
+  </div>
+</aside>
