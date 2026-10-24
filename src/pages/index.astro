@@ -1,34 +1,49 @@
 ---
-import Header from '../components/Header.astro';
-import ResourceTable from '../components/ResourceTable.astro';
-import Sidebar from '../components/Sidebar.astro';
-import { resources } from '../data/archive';
 import BaseLayout from '../layouts/BaseLayout.astro';
+import { grades, resources } from '../data/archive';
 ---
 
-<BaseLayout
-  title="MegaDocs"
-  description="Past exam notes organized across four grades, four terms, and nine subjects."
->
-  <Header />
+<BaseLayout title="MegaDocs — Exam notes, all in one place" description="Find exam notes and revision documents for Grades 9–12. Browse MegaDocs by grade and term.">
+  <header class="home-header">
+    <a class="brand" href="/" aria-label="MegaDocs home">MegaDocs</a>
+    <nav aria-label="Main navigation">
+      <a href="/" aria-current="page">Home</a>
+      <a href="/archive">Archive <span aria-hidden="true">↗</span></a>
+    </nav>
+  </header>
 
-  <div class="app-shell" id="top">
-    <Sidebar />
+  <main class="landing">
+    <section class="hero" aria-labelledby="heroTitle">
+      <p class="eyebrow">THE EXAM NOTES ARCHIVE</p>
+      <h1 id="heroTitle">Less searching.<br /><span>More studying.</span></h1>
+      <p class="hero-copy">Your exam notes, together in one place. Find your grade, choose a term, and get straight to revision.</p>
+      <a class="primary-link" href="/archive">Explore the archive <span aria-hidden="true">→</span></a>
+      <p class="hero-detail">{resources.length} documents · Grades 9–12 · Direct Google Docs links</p>
+    </section>
 
-    <main class="content">
-      <article class="document">
-        <section class="intro" aria-labelledby="pageTitle">
-          <h1 id="pageTitle">Grade 11 — Term 4</h1>
-          <p id="pageDescription">Revision notes for this exam term.</p>
-        </section>
+    <section class="grade-section" aria-labelledby="gradesTitle">
+      <div class="landing-section-heading">
+        <div><p class="eyebrow">FIND YOUR NOTES</p><h2 id="gradesTitle">Start with your grade.</h2></div>
+        <a href="/archive">View all documents <span aria-hidden="true">↗</span></a>
+      </div>
+      <div class="grade-grid">
+        {grades.map((grade) => {
+          const count = resources.filter((resource) => resource.grade === grade).length;
+          return (
+            <a class="grade-card" href={`/archive?grade=${encodeURIComponent(grade)}`}>
+              <span class="grade-card-top">{count ? `${count} document${count === 1 ? '' : 's'}` : 'Coming soon'}<span aria-hidden="true">↗</span></span>
+              <h3>{grade}</h3>
+              <p>{grade === 'Grade 11' ? 'Science notes across all four terms.' : grade === 'Grade 10' ? 'Subject notes for Terms 3 and 4.' : grade === 'Grade 9' ? 'Diploma preparation starts here.' : 'Notes will appear here when added.'}</p>
+            </a>
+          );
+        })}
+      </div>
+    </section>
 
-        <ResourceTable resources={resources} />
-      </article>
-    </main>
-
-  </div>
-
-  <div class="scrim" id="scrim" hidden></div>
-
-  <script src="../scripts/archive.ts"></script>
+    <section class="study-note">
+      <span aria-hidden="true">↗</span>
+      <div><h2>Find it here. Read it in Google Docs.</h2><p>Every document opens directly in a new tab, ready for your next study session.</p></div>
+    </section>
+  </main>
+  <footer class="home-footer"><a href="/">MegaDocs</a><p>A little more organized. A little more prepared.</p><a href="/archive">Browse archive →</a></footer>
 </BaseLayout>

@@ -630,3 +630,40 @@ h1 {
     transition: none !important;
   }
 }
+
+/* Landing page */
+.home-header { max-width: 1200px; margin: auto; height: 84px; display: flex; align-items: center; justify-content: space-between; padding: 0 40px; border-bottom: 1px solid var(--line); }
+.home-header .brand { padding: 0; }
+.home-header nav { display: flex; gap: 30px; font-size: 14px; color: var(--muted); }
+.home-header nav a[aria-current], .home-header a:hover { color: var(--accent); }
+.landing { max-width: 1200px; margin: auto; padding: 0 40px; }
+.hero { padding: 100px 0 88px; max-width: 790px; }
+.eyebrow { color: var(--accent); font-size: 11px; font-weight: 600; letter-spacing: .14em; margin: 0 0 24px; }
+.hero h1 { font-size: clamp(48px, 7vw, 86px); line-height: 1.06; }
+.hero h1 span { color: var(--accent); }
+.hero-copy { max-width: 510px; color: var(--muted); font-size: 18px; line-height: 1.75; margin: 28px 0 32px; }
+.primary-link { display: inline-flex; align-items: center; gap: 38px; padding: 16px 22px; border-radius: 6px; background: var(--accent); color: #14281d; font-size: 14px; font-weight: 600; }
+.primary-link:hover { filter: brightness(1.1); }
+.hero-detail { color: var(--faint); font-size: 12px; margin: 20px 0 0; line-height: 1.8; }
+.grade-section { border-top: 1px solid var(--line); padding: 44px 0 64px; }
+.landing-section-heading { display: flex; align-items: flex-end; justify-content: space-between; gap: 24px; margin-bottom: 28px; }
+.landing-section-heading .eyebrow { margin-bottom: 12px; }
+.landing-section-heading h2 { font-size: 28px; letter-spacing: -.035em; margin: 0; }
+.landing-section-heading > a { color: var(--muted); font-size: 13px; }
+.grade-grid { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 16px; }
+.grade-card { border: 1px solid var(--line); background: var(--surface); border-radius: 8px; padding: 24px; }
+.grade-card:hover { border-color: var(--accent); }
+.grade-card-top { display: flex; justify-content: space-between; color: var(--muted); font-size: 12px; gap: 8px; }
+.grade-card-top > span { color: var(--accent); }
+.grade-card h3 { font-size: 26px; letter-spacing: -.04em; margin: 38px 0 12px; }
+.grade-card p { color: var(--muted); font-size: 13px; line-height: 1.7; margin: 0; }
+.study-note { display: flex; gap: 22px; border-top: 1px solid var(--line); padding: 38px 0 64px; }
+.study-note > span { color: var(--accent); font-size: 28px; }
+.study-note h2 { font-size: 17px; font-weight: 500; margin: 0 0 10px; }
+.study-note p { color: var(--muted); font-size: 14px; line-height: 1.7; margin: 0; }
+.home-footer { max-width: 1120px; margin: auto; padding: 26px 0; border-top: 1px solid var(--line); display: flex; align-items: center; justify-content: space-between; gap: 24px; font-size: 12px; }
+.home-footer p { color: var(--faint); }
+.home-footer > a:last-child { color: var(--muted); }
+a:focus-visible, button:focus-visible { outline: 2px solid var(--accent); outline-offset: 4px; }
+@media (max-width: 900px) { .grade-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); } .home-footer { margin-inline: 40px; } }
+@media (max-width: 540px) { .home-header { height: 70px; padding-inline: 22px; } .landing { padding-inline: 22px; } .hero { padding: 64px 0; } .hero-copy { font-size: 16px; } .landing-section-heading { align-items: flex-start; flex-direction: column; } .grade-grid { grid-template-columns: 1fr; } .grade-card h3 { margin-top: 24px; } .home-footer { margin-inline: 22px; align-items: flex-start; flex-direction: column; gap: 12px; } .home-footer p { margin: 0; } }

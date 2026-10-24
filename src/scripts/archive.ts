@@ -4,13 +4,18 @@ interface ArchiveState {
   query: string;
 }
 
+const requestedGrade = new URLSearchParams(window.location.search).get('grade');
+const initialGrade = ['Grade 12', 'Grade 11', 'Grade 10', 'Grade 9'].includes(requestedGrade ?? '')
+  ? requestedGrade
+  : null;
+
 const state: ArchiveState = {
-  grade: 'Grade 11',
-  term: 'Term 4',
+  grade: initialGrade,
+  term: null,
   query: '',
 };
 
-const openGrades = new Set(['Grade 11']);
+const openGrades = new Set(initialGrade ? [initialGrade] : []);
 
 function getElement<T extends Element>(selector: string): T {
   const element = document.querySelector<T>(selector);

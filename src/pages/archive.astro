@@ -1,0 +1,34 @@
+---
+import Header from '../components/Header.astro';
+import ResourceTable from '../components/ResourceTable.astro';
+import Sidebar from '../components/Sidebar.astro';
+import { resources } from '../data/archive';
+import BaseLayout from '../layouts/BaseLayout.astro';
+---
+
+<BaseLayout
+  title="Archive — MegaDocs"
+  description="Browse exam notes by grade and term."
+>
+  <Header />
+
+  <div class="app-shell" id="top">
+    <Sidebar />
+
+    <main class="content">
+      <article class="document">
+        <section class="intro" aria-labelledby="pageTitle">
+          <h1 id="pageTitle">Exam Archive</h1>
+          <p id="pageDescription">Past exam notes across all available grades and terms.</p>
+        </section>
+
+        <ResourceTable resources={resources} />
+      </article>
+    </main>
+
+  </div>
+
+  <div class="scrim" id="scrim" hidden></div>
+
+  <script src="../scripts/archive.ts"></script>
+</BaseLayout>
