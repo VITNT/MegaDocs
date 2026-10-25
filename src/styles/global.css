@@ -32,6 +32,7 @@
 
 html {
   scroll-behavior: smooth;
+  scrollbar-gutter: stable;
   color-scheme: dark;
   background: var(--bg);
 }
@@ -667,3 +668,24 @@ h1 {
 a:focus-visible, button:focus-visible { outline: 2px solid var(--accent); outline-offset: 4px; }
 @media (max-width: 900px) { .grade-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); } .home-footer { margin-inline: 40px; } }
 @media (max-width: 540px) { .home-header { height: 70px; padding-inline: 22px; } .landing { padding-inline: 22px; } .hero { padding: 64px 0; } .hero-copy { font-size: 16px; } .landing-section-heading { align-items: flex-start; flex-direction: column; } .grade-grid { grid-template-columns: 1fr; } .grade-card h3 { margin-top: 24px; } .home-footer { margin-inline: 22px; align-items: flex-start; flex-direction: column; gap: 12px; } .home-footer p { margin: 0; } }
+
+/* Document search */
+.side-title { display: block; }
+.side-title:hover { color: var(--accent); }
+.search-field { cursor: pointer; text-align: left; }
+.search-field > span { flex: 1; }
+.search-dialog { width: min(520px, calc(100vw - 32px)); height: min(480px, calc(100dvh - 48px)); max-height: calc(100dvh - 48px); overflow: hidden; margin: auto; padding: 20px; border: 1px solid var(--line); border-radius: 12px; background: var(--surface); color: var(--text); box-shadow: 0 24px 80px rgb(0 0 0 / 35%); }
+.search-dialog[open] { display: flex; flex-direction: column; }
+.search-dialog-heading, .modal-search-input, .search-status { flex-shrink: 0; }
+.search-dialog::backdrop { background: rgb(0 0 0 / 60%); }
+html:has(.search-dialog[open]) { overflow: hidden; }
+.search-dialog-heading { display: flex; align-items: center; justify-content: space-between; gap: 16px; margin-bottom: 14px; }
+.search-dialog-heading h2 { margin: 0; font-size: 17px; }
+.modal-search-input { width: 100%; padding: 12px; border: 1px solid var(--line); border-radius: 6px; background: var(--bg); color: var(--text); font-size: 14px; }
+.modal-search-input:focus { outline: 2px solid var(--accent); outline-offset: 2px; }
+.search-status { min-height: 42px; margin: 12px 0; color: var(--muted); font-size: 13px; line-height: 1.6; }
+.search-results { display: grid; align-content: start; gap: 6px; flex: 1; min-height: 0; overflow-y: auto; scrollbar-gutter: stable; }
+.search-result { display: grid; gap: 6px; padding: 12px; border-radius: 6px; }
+.search-result:hover, .search-result:focus-visible { background: var(--selected); }
+.search-result strong { font-size: 14px; font-weight: 500; }
+.search-result small { color: var(--muted); font-size: 12px; }

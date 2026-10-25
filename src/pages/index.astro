@@ -33,7 +33,7 @@ import { grades, resources } from '../data/archive';
             <a class="grade-card" href={`/archive?grade=${encodeURIComponent(grade)}`}>
               <span class="grade-card-top">{count ? `${count} document${count === 1 ? '' : 's'}` : 'Coming soon'}<span aria-hidden="true">↗</span></span>
               <h3>{grade}</h3>
-              <p>{grade === 'Grade 11' ? 'Science notes across all four terms.' : grade === 'Grade 10' ? 'Subject notes for Terms 3 and 4.' : grade === 'Grade 9' ? 'Diploma preparation starts here.' : 'Notes will appear here when added.'}</p>
+              <p>{grade === 'Grade 11' ? 'Science notes across all four terms.' : grade === 'Grade 10' ? 'Subject notes for Terms 3 and 4.' : grade === 'Grade 9' ? 'Diploma preparation starts here.' : 'Exam notes for Term 1.'}</p>
             </a>
           );
         })}

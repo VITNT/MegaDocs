@@ -14,6 +14,15 @@ export interface Resource {
 
 export const resources: Resource[] = [
   {
+    grade: 'Grade 12',
+    term: 'Term 1',
+    subject: 'Exam notes',
+    title: 'Grade 12 — Term 1',
+    type: 'Google Doc',
+    description: 'Grade 12 exam notes for Term 1.',
+    href: 'https://docs.google.com/document/d/16ePq2F1Fp_feRFAqqCgVUQiIFwPXrrICdEdrA4cte8c/edit?tab=t.4wmptppp3lnl',
+  },
+  {
     grade: 'Grade 11',
     term: 'Term 4',
     subject: 'Science',

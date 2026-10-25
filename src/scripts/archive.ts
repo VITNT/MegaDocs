@@ -1,7 +1,6 @@
 interface ArchiveState {
   grade: string | null;
   term: string | null;
-  query: string;
 }
 
 const requestedGrade = new URLSearchParams(window.location.search).get('grade');
@@ -12,7 +11,6 @@ const initialGrade = ['Grade 12', 'Grade 11', 'Grade 10', 'Grade 9'].includes(re
 const state: ArchiveState = {
   grade: initialGrade,
   term: null,
-  query: '',
 };
 
 const openGrades = new Set(initialGrade ? [initialGrade] : []);
@@ -52,11 +50,6 @@ function matchesCurrentView(resource: HTMLElement): boolean {
     !state.term ||
     resource.dataset.term === state.term ||
     resource.dataset.term === 'All terms';
-  const matchesSearch =
-    !state.query || resource.dataset.title?.toLowerCase().includes(state.query);
-
-  if (state.query) return Boolean(matchesSearch);
-
   return matchesGrade && matchesTerm;
 }
 
@@ -74,26 +67,20 @@ function updateResources(): number {
 }
 
 function updatePageCopy(visibleResources: number): void {
-  const isSearching = Boolean(state.query);
   const isArchive = !state.grade;
   const isGrade = Boolean(state.grade && !state.term);
 
-  pageTitle.textContent = isSearching
-    ? 'Search results'
-    : isArchive
+  pageTitle.textContent = isArchive
       ? 'Exam Archive'
       : isGrade
         ? state.grade
         : `${state.grade} — ${state.term}`;
 
-  if (isSearching) {
-    pageDescription.textContent = 'Matching notes across all grades and terms.';
-  } else if (isArchive) {
+  if (isArchive) {
     pageDescription.textContent = 'Past exam notes across all available grades and terms.';
   } else if (isGrade) {
     pageDescription.textContent = `Past exam notes available for ${state.grade}.`;
-  } else if (state.grade === 'Grade 12') {
-    pageDescription.textContent = 'No Grade 12 notes have been added yet.';
+
   } else if (visibleResources > 0) {
     pageDescription.textContent = 'Revision notes for this exam term.';
   } else {
@@ -177,10 +164,50 @@ termButtons.forEach((button) => {
   });
 });
 
-searchInput.addEventListener('input', () => {
-  state.query = searchInput.value.trim().toLowerCase();
-  render();
+const searchDialog = getElement<HTMLDialogElement>('#searchDialog');
+const searchResults = getElement<HTMLElement>('#searchResults');
+const searchStatus = getElement<HTMLElement>('#searchStatus');
+
+function updateSearch(): void {
+  const words = searchInput.value.trim().toLowerCase().split(/\s+/).filter(Boolean);
+  searchResults.replaceChildren();
+  const matches = words.length ? resourceRows.filter((row) =>
+    words.every((word) => row.dataset.title?.toLowerCase().includes(word))) : [];
+  matches.forEach((row) => {
+    const link = document.createElement('a');
+    link.href = (row as HTMLAnchorElement).href;
+    link.target = '_blank';
+    link.rel = 'noreferrer';
+    link.className = 'search-result';
+    const title = document.createElement('strong');
+    title.textContent = row.querySelector('strong')?.textContent ?? '';
+    const context = document.createElement('small');
+    context.textContent = `${row.dataset.grade} · ${row.dataset.term} · ${row.querySelector('small')?.textContent}`;
+    link.append(title, context);
+    searchResults.append(link);
+  });
+  searchStatus.textContent = !words.length ? 'Search across all grades and terms.'
+    : matches.length ? `${matches.length} document${matches.length === 1 ? '' : 's'} found`
+    : 'No documents found. Try a different title, grade, term, or subject.';
+}
+
+function openSearch(): void {
+  closeMenu();
+  if (!searchDialog.open) searchDialog.showModal();
+  updateSearch();
+  searchInput.focus();
+}
+
+getElement<HTMLButtonElement>('#searchButton').addEventListener('click', openSearch);
+getElement<HTMLButtonElement>('#closeSearch').addEventListener('click', () => searchDialog.close());
+searchDialog.addEventListener('click', (event) => {
+  const bounds = searchDialog.getBoundingClientRect();
+  if (event.target === searchDialog && (event.clientX < bounds.left || event.clientX > bounds.right || event.clientY < bounds.top || event.clientY > bounds.bottom)) searchDialog.close();
 });
+searchDialog.addEventListener('close', () => {
+  getElement<HTMLButtonElement>('#searchButton').focus();
+});
+searchInput.addEventListener('input', updateSearch);
 
 archiveCrumb.addEventListener('click', () => {
   state.grade = null;
@@ -200,7 +227,7 @@ termCrumb.addEventListener('click', scrollToTop);
 document.addEventListener('keydown', (event) => {
   if ((event.metaKey || event.ctrlKey) && event.key.toLowerCase() === 'k') {
     event.preventDefault();
-    searchInput.focus();
+    openSearch();
   }
 
   if (event.key === 'Escape') {

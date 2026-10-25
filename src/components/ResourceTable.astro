@@ -11,7 +11,7 @@ const { resources } = Astro.props;
 <section class="section" aria-labelledby="resourcesTitle">
   <div class="section-heading">
     <h2 id="resourcesTitle">Available resources</h2>
-    <span id="resourceCount">2 documents</span>
+    <span id="resourceCount">{resources.length} document{resources.length === 1 ? '' : 's'}</span>
   </div>
 
   <div class="resource-table" id="resourceList">

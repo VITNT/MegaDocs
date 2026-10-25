@@ -1,25 +1,21 @@
 ---
 import { grades, terms } from '../data/archive';
 
-const initialGrade = 'Grade 11';
-const initialTerm = 'Term 4';
 ---
 
 <aside class="sidebar" id="sidebar">
   <div class="side-scroll">
-    <p class="side-title">Exam archive</p>
+    <a class="side-title" href="/archive">Exam archive</a>
 
     <nav aria-label="Grade navigation">
       {
         grades.map((grade) => {
-          const isOpen = grade === initialGrade;
-
           return (
             <section class="grade-group">
               <button
-                class:list={['grade-button', { active: isOpen }]}
+                class="grade-button"
                 data-grade={grade}
-                aria-expanded={String(isOpen)}
+                aria-expanded="false"
               >
                 <span>{grade}</span>
                 <svg viewBox="0 0 20 20" aria-hidden="true">
@@ -30,10 +26,7 @@ const initialTerm = 'Term 4';
               <div class="term-list">
                 {terms.map((term) => (
                   <button
-                    class:list={[
-                      'term-button',
-                      { active: isOpen && term === initialTerm },
-                    ]}
+                    class="term-button"
                     data-grade={grade}
                     data-term={term}
                   >

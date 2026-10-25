@@ -3,26 +3,26 @@
 
   <nav class="directory" aria-label="Current location">
     <button id="archiveCrumb" type="button">Archive</button>
-    <svg class="grade-separator" viewBox="0 0 20 20" aria-hidden="true">
+    <svg class="grade-separator" hidden viewBox="0 0 20 20" aria-hidden="true">
       <path d="m7 4 6 6-6 6"></path>
     </svg>
 
-    <button id="gradeCrumb" type="button">Grade 11</button>
-    <svg class="term-separator" viewBox="0 0 20 20" aria-hidden="true">
+    <button id="gradeCrumb" type="button" hidden></button>
+    <svg class="term-separator" hidden viewBox="0 0 20 20" aria-hidden="true">
       <path d="m7 4 6 6-6 6"></path>
     </svg>
 
-    <button class="current" id="termCrumb" type="button">Term 4</button>
+    <button id="termCrumb" type="button" hidden></button>
   </nav>
 
   <div class="top-actions">
-    <label class="search-field" aria-label="Search notes">
+    <button class="search-field" id="searchButton" type="button" aria-haspopup="dialog" aria-controls="searchDialog">
       <svg viewBox="0 0 24 24" aria-hidden="true">
         <path d="m21 21-4.3-4.3m2.3-5.2a7.5 7.5 0 1 1-15 0 7.5 7.5 0 0 1 15 0Z"></path>
       </svg>
-      <input id="searchInput" type="search" placeholder="Search" autocomplete="off" />
+      <span>Search</span>
       <kbd>⌘ K</kbd>
-    </label>
+    </button>
 
     <button class="icon-button" id="themeButton" aria-label="Switch color theme">
       <svg viewBox="0 0 24 24" aria-hidden="true">
@@ -42,3 +42,13 @@
     </button>
   </div>
 </header>
+
+<dialog class="search-dialog" id="searchDialog" aria-labelledby="searchTitle">
+  <div class="search-dialog-heading">
+    <h2 id="searchTitle">Search documents</h2>
+    <button class="icon-button" id="closeSearch" type="button" aria-label="Close search">✕</button>
+  </div>
+  <input id="searchInput" class="modal-search-input" type="search" placeholder="Search by title, grade, term, or subject…" aria-label="Search all documents" autocomplete="off" autofocus />
+  <p class="search-status" id="searchStatus" role="status">Search across all grades and terms.</p>
+  <div class="search-results" id="searchResults"></div>
+</dialog>
