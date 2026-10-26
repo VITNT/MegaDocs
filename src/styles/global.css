@@ -14,6 +14,8 @@
   --button-text: #24451b;
   --button-edge: #79a447;
   --shadow: #dbe3d3;
+  --overlay: rgb(12 28 21 / 55%);
+  --dialog-shadow: rgb(15 36 23 / 15%);
   --green-soft: #edf7df;
   --green: #426f29;
   --purple-soft: #eee8fc;
@@ -26,21 +28,23 @@
 
 [data-theme='dark'] {
   color-scheme: dark;
-  --bg: #172a25;
-  --sidebar: #1c322b;
-  --header: #1a2e28;
-  --surface: #20382f;
-  --selected: #354e32;
-  --line: #3e5749;
-  --text: #f2f6e9;
-  --muted: #bbcdbd;
-  --faint: #a6bba9;
+  --bg: #1c1d1f;
+  --sidebar: #212224;
+  --header: #212224;
+  --surface: #27282b;
+  --selected: #35373a;
+  --line: #44464a;
+  --text: #f2f3f4;
+  --muted: #bfc2c7;
+  --faint: #a7abb1;
   --accent: #c1ed75;
   --button: #c1ed75;
   --button-text: #24451b;
   --button-edge: #78a446;
-  --shadow: #0e201a;
-  --green-soft: #2c432d;
+  --shadow: #131416;
+  --overlay: rgb(10 11 13 / 65%);
+  --dialog-shadow: rgb(0 0 0 / 25%);
+  --green-soft: #303234;
   --green: #c3e89b;
   --purple-soft: #38334e;
   --purple: #d2bef5;
@@ -220,14 +224,14 @@ h1 { margin: 0; font-size: clamp(2.1rem, 4.5vw, 3.45rem); font-weight: 900; line
 .empty-state { padding: 38px 24px; border: 2px dashed var(--line); border-radius: 20px; background: var(--surface); text-align: center; }
 .empty-state h3 { margin: 0 0 8px; font-size: 19px; font-weight: 900; }
 .empty-state p { margin: 0; color: var(--muted); font-size: 14px; }
-.scrim { position: fixed; inset: 76px 0 0; z-index: 19; background: rgb(12 28 21 / 55%); }
+.scrim { position: fixed; inset: 76px 0 0; z-index: 19; background: var(--overlay); }
 
 /* Search dialog */
-.search-dialog { width: min(560px, calc(100vw - 32px)); height: min(520px, calc(100dvh - 48px)); max-height: calc(100dvh - 48px); overflow: hidden; margin: auto; padding: 25px; border: 2px solid var(--line); border-radius: 24px; background: var(--surface); color: var(--text); box-shadow: 0 12px 0 rgb(15 36 23 / 15%), 0 24px 80px rgb(0 0 0 / 20%); }
+.search-dialog { width: min(560px, calc(100vw - 32px)); height: min(520px, calc(100dvh - 48px)); max-height: calc(100dvh - 48px); overflow: hidden; margin: auto; padding: 25px; border: 2px solid var(--line); border-radius: 24px; background: var(--surface); color: var(--text); box-shadow: 0 12px 0 var(--dialog-shadow), 0 24px 80px rgb(0 0 0 / 20%); }
 .search-dialog[open] { display: flex; flex-direction: column; animation: dialog-in .2s ease-out; }
 @keyframes dialog-in { from { opacity: 0; transform: translateY(12px) scale(.98); } to { opacity: 1; transform: none; } }
 .search-dialog-heading, .modal-search-input, .search-status { flex-shrink: 0; }
-.search-dialog::backdrop { background: rgb(12 28 21 / 55%); backdrop-filter: blur(4px); }
+.search-dialog::backdrop { background: var(--overlay); backdrop-filter: blur(4px); }
 html:has(.search-dialog[open]) { overflow: hidden; }
 .search-dialog-heading { display: flex; align-items: center; justify-content: space-between; gap: 16px; margin-bottom: 20px; }
 .search-dialog-heading h2 { margin: 0; font-size: 22px; font-weight: 900; letter-spacing: -.025em; }
