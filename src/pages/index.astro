@@ -1,24 +1,39 @@
 ---
 import BaseLayout from '../layouts/BaseLayout.astro';
+import Brand from '../components/Brand.astro';
+import ThemeToggle from '../components/ThemeToggle.astro';
 import { grades, resources } from '../data/archive';
 ---
 
 <BaseLayout title="MegaDocs — Exam notes, all in one place" description="Find exam notes and revision documents for Grades 9–12. Browse MegaDocs by grade and term.">
   <header class="home-header">
-    <a class="brand" href="/" aria-label="MegaDocs home">MegaDocs</a>
+    <Brand />
     <nav aria-label="Main navigation">
       <a href="/" aria-current="page">Home</a>
       <a href="/archive">Archive <span aria-hidden="true">↗</span></a>
+      <ThemeToggle />
     </nav>
   </header>
 
-  <main class="landing">
+  <main class="landing" id="main">
     <section class="hero" aria-labelledby="heroTitle">
-      <p class="eyebrow">THE EXAM NOTES ARCHIVE</p>
+      <div class="hero-text">
       <h1 id="heroTitle">Less searching.<br /><span>More studying.</span></h1>
       <p class="hero-copy">Your exam notes, together in one place. Find your grade, choose a term, and get straight to revision.</p>
       <a class="primary-link" href="/archive">Explore the archive <span aria-hidden="true">→</span></a>
-      <p class="hero-detail">{resources.length} documents · Grades 9–12 · Direct Google Docs links</p>
+      </div>
+      <div class="hero-art" aria-hidden="true">
+        <span class="art-spark spark-one">✦</span>
+        <span class="art-spark spark-two">✧</span>
+        <span class="art-orbit"></span>
+        <div class="note-sticker"><span>✓</span> You've got this!</div>
+        <div class="study-book">
+          <span class="book-label">ONE PAGE AT A TIME</span>
+          <svg viewBox="0 0 200 160"><path class="book-pages" d="M100 35Q67 16 24 28v104q43-12 76 7 33-19 76-7V28q-43-12-76 7Z" /><path d="M100 35v104M39 45q23-4 44 5m34 0q21-9 44-5" /><path class="book-eyes" d="M62 77v8m76-8v8" /><path d="M87 96q13 15 26 0" /><path class="book-cheek" d="M49 94h9m84 0h9" /></svg>
+          <span class="book-caption">Small steps. Big possibilities.</span>
+        </div>
+        <div class="subject-sticker"><span>✷</span> Let's make it click.</div>
+      </div>
     </section>
 
     <section class="grade-section" aria-labelledby="gradesTitle">
@@ -30,8 +45,9 @@ import { grades, resources } from '../data/archive';
         {grades.map((grade) => {
           const count = resources.filter((resource) => resource.grade === grade).length;
           return (
-            <a class="grade-card" href={`/archive?grade=${encodeURIComponent(grade)}`}>
+            <a class="grade-card" data-grade={grade} href={`/archive?grade=${encodeURIComponent(grade)}`}>
               <span class="grade-card-top">{count ? `${count} document${count === 1 ? '' : 's'}` : 'Coming soon'}<span aria-hidden="true">↗</span></span>
+              <span class="grade-icon" aria-hidden="true">{grade === 'Grade 12' ? '✦' : grade === 'Grade 11' ? '⚛' : grade === 'Grade 10' ? '✳' : '⚑'}</span>
               <h3>{grade}</h3>
               <p>{grade === 'Grade 11' ? 'Science notes across all four terms.' : grade === 'Grade 10' ? 'Subject notes for Terms 3 and 4.' : grade === 'Grade 9' ? 'Diploma preparation starts here.' : 'Exam notes for Term 1.'}</p>
             </a>
@@ -41,9 +57,9 @@ import { grades, resources } from '../data/archive';
     </section>
 
     <section class="study-note">
-      <span aria-hidden="true">↗</span>
+      <span aria-hidden="true">✓</span>
       <div><h2>Find it here. Read it in Google Docs.</h2><p>Every document opens directly in a new tab, ready for your next study session.</p></div>
     </section>
   </main>
-  <footer class="home-footer"><a href="/">MegaDocs</a><p>A little more organized. A little more prepared.</p><a href="/archive">Browse archive →</a></footer>
+  <footer class="home-footer"><a href="/">MegaDocs</a><a href="/archive">Browse archive →</a></footer>
 </BaseLayout>

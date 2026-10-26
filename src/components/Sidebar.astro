@@ -5,7 +5,7 @@ import { grades, terms } from '../data/archive';
 
 <aside class="sidebar" id="sidebar">
   <div class="side-scroll">
-    <a class="side-title" href="/archive">Exam archive</a>
+    <a class="side-title" href="/archive">Your learning library <span aria-hidden="true">↗</span></a>
 
     <nav aria-label="Grade navigation">
       {
@@ -14,30 +14,36 @@ import { grades, terms } from '../data/archive';
             <section class="grade-group">
               <button
                 class="grade-button"
+                id={`grade-${grade.replace('Grade ', '')}`}
                 data-grade={grade}
                 aria-expanded="false"
+                aria-controls={`terms-${grade.replace('Grade ', '')}`}
               >
-                <span>{grade}</span>
+                <span class="grade-button-label"><span class="grade-number" aria-hidden="true">{grade.replace('Grade ', '')}</span>{grade}</span>
                 <svg viewBox="0 0 20 20" aria-hidden="true">
                   <path d="m5 7 5 5 5-5"></path>
                 </svg>
               </button>
 
-              <div class="term-list">
-                {terms.map((term) => (
+              <div class="term-list" id={`terms-${grade.replace('Grade ', '')}`} inert>
+                <div class="term-list-inner">
+                {terms.map((term, index) => (
                   <button
                     class="term-button"
                     data-grade={grade}
                     data-term={term}
+                    style={`--term-order: ${index}`}
                   >
                     {term}
                   </button>
                 ))}
+                </div>
               </div>
             </section>
           );
         })
       }
     </nav>
+    <div class="sidebar-tip"><span aria-hidden="true">✦</span><strong>A little every day.</strong><p>Pick a term, find your notes, and take it one page at a time.</p></div>
   </div>
 </aside>

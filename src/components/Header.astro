@@ -1,5 +1,9 @@
+---
+import Brand from './Brand.astro';
+import ThemeToggle from './ThemeToggle.astro';
+---
 <header class="topbar">
-  <a class="brand" href="/">MegaDocs</a>
+  <Brand />
 
   <nav class="directory" aria-label="Current location">
     <button id="archiveCrumb" type="button">Archive</button>
@@ -16,7 +20,7 @@
   </nav>
 
   <div class="top-actions">
-    <button class="search-field" id="searchButton" type="button" aria-haspopup="dialog" aria-controls="searchDialog">
+    <button class="search-field" id="searchButton" type="button" aria-label="Search documents" aria-haspopup="dialog" aria-controls="searchDialog">
       <svg viewBox="0 0 24 24" aria-hidden="true">
         <path d="m21 21-4.3-4.3m2.3-5.2a7.5 7.5 0 1 1-15 0 7.5 7.5 0 0 1 15 0Z"></path>
       </svg>
@@ -24,11 +28,7 @@
       <kbd>⌘ K</kbd>
     </button>
 
-    <button class="icon-button" id="themeButton" aria-label="Switch color theme">
-      <svg viewBox="0 0 24 24" aria-hidden="true">
-        <path d="M12 3a9 9 0 1 0 9 9 7 7 0 0 1-9-9Z"></path>
-      </svg>
-    </button>
+    <ThemeToggle />
 
     <button
       class="icon-button menu-button"

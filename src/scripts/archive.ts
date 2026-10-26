@@ -111,12 +111,16 @@ function updateNavigation(): void {
     const grade = button.dataset.grade ?? '';
     button.classList.toggle('active', grade === state.grade);
     button.setAttribute('aria-expanded', String(openGrades.has(grade)));
+    const drawer = document.getElementById(button.getAttribute('aria-controls') ?? '');
+    if (drawer) drawer.inert = !openGrades.has(grade);
   });
 
   termButtons.forEach((button) => {
     const isActive =
       button.dataset.grade === state.grade && button.dataset.term === state.term;
     button.classList.toggle('active', isActive);
+    if (isActive) button.setAttribute('aria-current', 'true');
+    else button.removeAttribute('aria-current');
   });
 }
 
@@ -244,10 +248,5 @@ menuButton.addEventListener('click', () => {
 });
 
 scrim.addEventListener('click', closeMenu);
-
-getElement<HTMLButtonElement>('#themeButton').addEventListener('click', () => {
-  const root = document.documentElement;
-  root.dataset.theme = root.dataset.theme === 'dark' ? 'light' : 'dark';
-});
 
 render();
