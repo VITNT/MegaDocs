@@ -2,6 +2,7 @@
 import BaseLayout from '../layouts/BaseLayout.astro';
 import Brand from '../components/Brand.astro';
 import ThemeToggle from '../components/ThemeToggle.astro';
+import SoundToggle from '../components/SoundToggle.astro';
 import { grades, resources } from '../data/archive';
 ---
 
@@ -12,6 +13,7 @@ import { grades, resources } from '../data/archive';
       <a href="/" aria-current="page">Home</a>
       <a href="/archive">Archive <span aria-hidden="true">↗</span></a>
       <ThemeToggle />
+      <SoundToggle />
     </nav>
   </header>
 

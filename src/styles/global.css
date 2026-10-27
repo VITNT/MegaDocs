@@ -297,6 +297,9 @@ html:has(.search-dialog[open]) { overflow: hidden; }
   .landing-section-heading h2 { font-size: 27px; }
 }
 @media (max-width: 540px) {
+  .search-field { width: 40px; padding: 9px; }
+  .search-field > span { display: none; }
+  .search-field svg { width: 18px; flex-shrink: 0; }
   .home-header { height: 80px; padding-inline: 22px; }
   .brand { font-size: 21px; }
   .brand-mark { width: 31px; height: 34px; margin-right: 7px; border-radius: 10px; }
@@ -326,14 +329,17 @@ html:has(.search-dialog[open]) { overflow: hidden; }
   .topbar .brand-mark { width: 27px; height: 30px; margin-right: 5px; }
   .topbar .brand-mark svg { width: 20px; }
   .top-actions { padding-right: 12px; gap: 7px; }
-  .search-field { width: 40px; padding: 9px; }
-  .search-field > span { display: none; }
-  .search-field svg { width: 18px; flex-shrink: 0; }
   .directory { gap: 4px; padding-inline: 12px; font-size: 13px; }
   .directory button { padding-inline: 4px; }
   .document { padding-inline: 16px; }
   .intro { padding: 22px; }
   .intro .eyebrow { font-size: 8px; letter-spacing: .08em; }
+}
+@media (max-width: 360px) {
+  .home-header { padding-inline: 12px; }
+  .home-header .brand { font-size: 18px; }
+  .home-header nav { gap: 6px; }
+  .home-header nav > a { padding-inline: 6px; }
 }
 @media (prefers-reduced-motion: reduce) {
   *, *::before, *::after { scroll-behavior: auto !important; transition: none !important; animation: none !important; }

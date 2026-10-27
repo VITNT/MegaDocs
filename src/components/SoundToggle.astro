@@ -1,0 +1,12 @@
+<button class="icon-button sound-button" type="button" data-sound-toggle aria-label="Button sounds" aria-pressed="true" title="Button sounds on">
+  <svg viewBox="0 0 24 24" aria-hidden="true">
+    <path d="m11 5-6 4H2v6h3l6 4Z" />
+    <path class="sound-waves" d="M15 8a6 6 0 0 1 0 8m3-11a10 10 0 0 1 0 14" />
+    <path class="sound-muted" d="m16 9 6 6m0-6-6 6" />
+  </svg>
+</button>
+
+<style>
+  .sound-muted, [aria-pressed='false'] .sound-waves { display: none; }
+  [aria-pressed='false'] .sound-muted { display: block; }
+</style>
