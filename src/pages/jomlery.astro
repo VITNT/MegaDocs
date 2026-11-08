@@ -1,0 +1,37 @@
+---
+import Header from '../components/Header.astro';
+import ResourceTable from '../components/ResourceTable.astro';
+import Sidebar from '../components/Sidebar.astro';
+import { jomleryGrades, jomleryResources } from '../data/jomlery';
+import BaseLayout from '../layouts/BaseLayout.astro';
+
+const counts = Object.fromEntries(jomleryGrades.map((grade) => [
+  grade, jomleryResources.filter((resource) => resource.grade === grade).length,
+]));
+---
+
+<BaseLayout
+  title="Jomlery — MegaDocs"
+  description="Browse Khmer Answer textbook answer keys by grade and subject. All available PDFs for Grades 7–12, together in Jomlery."
+>
+  <Header library="jomlery" />
+
+  <div class="app-shell" id="top" data-library="jomlery">
+    <Sidebar library="jomlery" grades={jomleryGrades} counts={counts} />
+
+    <main class="content" id="main">
+      <article class="document">
+        <section class="intro" aria-labelledby="pageTitle">
+          <p class="eyebrow"><span aria-hidden="true">✦</span> KHMER ANSWER DOCUMENTS</p>
+          <h1 id="pageTitle">Jomlery</h1>
+          <p id="pageDescription">Khmer textbook answer keys, organized by grade and subject. Choose a PDF to read in a new tab.</p>
+        </section>
+
+        <ResourceTable resources={jomleryResources} />
+      </article>
+    </main>
+  </div>
+
+  <div class="scrim" id="scrim" hidden></div>
+  <script src="../scripts/archive.ts"></script>
+</BaseLayout>

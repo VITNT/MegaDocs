@@ -152,6 +152,13 @@ h1 { margin: 0; font-size: clamp(2.1rem, 4.5vw, 3.45rem); font-weight: 900; line
 .directory button { min-width: 0; padding: 7px 6px; overflow: hidden; border: 0; border-radius: 8px; background: transparent; color: var(--muted); font-weight: 700; text-overflow: ellipsis; white-space: nowrap; }
 .directory button:hover { background: var(--selected); color: var(--accent); }
 .directory button.current { color: var(--accent); font-weight: 900; }
+.library-tabs { display: flex; align-items: center; flex-shrink: 0; gap: 4px; }
+.directory .library-link { padding: 7px 6px; border-radius: 8px; font-weight: 700; }
+.directory .library-link:hover { background: var(--selected); color: var(--accent); }
+.directory button[aria-current='page'] { background: var(--selected); color: var(--accent); font-weight: 900; }
+.grade-document-count { font-size: 11px; font-weight: 800; }
+.grade-group:has([data-grade='Grade 8']) { --grade-bg: var(--green-soft); --grade-ink: var(--green); }
+.grade-group:has([data-grade='Grade 7']) { --grade-bg: var(--purple-soft); --grade-ink: var(--purple); }
 .top-actions { display: flex; align-items: center; gap: 10px; padding-right: 24px; }
 .search-field { width: 220px; height: 40px; display: flex; align-items: center; gap: 8px; padding: 0 10px 0 12px; border: 2px solid var(--line); border-radius: 13px; background: var(--surface); color: var(--muted); text-align: left; box-shadow: 0 3px 0 var(--shadow); transition: border-color .18s, transform .18s; }
 .search-field:hover { border-color: var(--accent); transform: translateY(-2px); }
@@ -159,7 +166,7 @@ h1 { margin: 0; font-size: clamp(2.1rem, 4.5vw, 3.45rem); font-weight: 900; line
 .search-field > span { flex: 1; font-size: 14px; font-weight: 700; }
 .search-field kbd { padding: 2px 5px; border-radius: 5px; background: var(--selected); color: var(--muted); font: 11px 'Nunito', sans-serif; font-weight: 800; }
 .menu-button { display: none; }
-.app-shell { min-height: calc(100vh - 76px); display: grid; grid-template-columns: 270px minmax(0, 1fr); }
+.app-shell { min-height: calc(100vh - 76px); display: grid; grid-template-columns: 270px minmax(0, 1fr); scroll-margin-top: 76px; }
 .sidebar { position: sticky; top: 76px; height: calc(100vh - 76px); border-right: 2px solid var(--line); background: var(--sidebar); }
 .side-scroll { height: 100%; padding: 28px 18px; overflow-y: auto; }
 .side-title { display: flex; align-items: center; justify-content: space-between; margin: 0 8px 22px; color: var(--muted); font-size: 12px; font-weight: 900; }
@@ -300,7 +307,7 @@ html:has(.search-dialog[open]) { overflow: hidden; }
   .search-field { width: 40px; padding: 9px; }
   .search-field > span { display: none; }
   .search-field svg { width: 18px; flex-shrink: 0; }
-  .home-header { height: 80px; padding-inline: 22px; }
+  .home-header { min-height: 80px; height: auto; padding: 20px 22px; flex-wrap: wrap; gap: 16px; }
   .brand { font-size: 21px; }
   .brand-mark { width: 31px; height: 34px; margin-right: 7px; border-radius: 10px; }
   .brand-mark svg { width: 22px; }

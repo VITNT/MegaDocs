@@ -2,12 +2,22 @@
 import Brand from './Brand.astro';
 import ThemeToggle from './ThemeToggle.astro';
 import SoundToggle from './SoundToggle.astro';
+
+interface Props {
+  library?: 'archive' | 'jomlery';
+}
+
+const { library = 'archive' } = Astro.props;
+const isJomlery = library === 'jomlery';
 ---
 <header class="topbar">
   <Brand />
 
-  <nav class="directory" aria-label="Current location">
-    <button id="archiveCrumb" type="button">Archive</button>
+  <nav class="directory" aria-label="Library navigation">
+    <span class="library-tabs">
+    {isJomlery ? <a class="library-link" href="/archive">Archive</a> : <button id="archiveCrumb" type="button" aria-current="page">Archive</button>}
+    {isJomlery ? <button id="archiveCrumb" type="button" aria-current="page">Jomlery</button> : <a class="library-link" href="/jomlery">Jomlery</a>}
+    </span>
     <svg class="grade-separator" hidden viewBox="0 0 20 20" aria-hidden="true">
       <path d="m7 4 6 6-6 6"></path>
     </svg>
@@ -50,7 +60,7 @@ import SoundToggle from './SoundToggle.astro';
     <h2 id="searchTitle">Search documents</h2>
     <button class="icon-button" id="closeSearch" type="button" aria-label="Close search">✕</button>
   </div>
-  <input id="searchInput" class="modal-search-input" type="search" placeholder="Search by title, grade, term, or subject…" aria-label="Search all documents" autocomplete="off" autofocus />
-  <p class="search-status" id="searchStatus" role="status">Search across all grades and terms.</p>
+  <input id="searchInput" class="modal-search-input" type="search" placeholder={isJomlery ? 'Search by title, grade, or subject…' : 'Search by title, grade, term, or subject…'} aria-label="Search all documents" autocomplete="off" autofocus />
+  <p class="search-status" id="searchStatus" role="status">{isJomlery ? 'Search all Khmer Answer PDFs.' : 'Search across all grades and terms.'}</p>
   <div class="search-results" id="searchResults"></div>
 </dialog>

@@ -1,8 +1,16 @@
 ---
-import type { Resource } from '../data/archive';
-
 interface Props {
-  resources: Resource[];
+  resources: {
+    grade: string;
+    term?: string;
+    subject: string;
+    title: string;
+    type: string;
+    description: string;
+    href: string;
+    titleLang?: string;
+    filename?: string;
+  }[];
 }
 
 const { resources } = Astro.props;
@@ -29,21 +37,21 @@ const { resources } = Astro.props;
           rel="noreferrer"
           data-grade={resource.grade}
           data-term={resource.term}
-          data-title={`${resource.grade} ${resource.term} ${resource.title} ${resource.type} ${resource.description} ${resource.subject}`}
+          data-title={`${resource.grade} ${resource.term ?? ''} ${resource.title} ${resource.type} ${resource.description} ${resource.subject} ${resource.filename ?? ''}`}
         >
           <span class="resource-name">
             <svg viewBox="0 0 24 24" aria-hidden="true">
               <path d="M7 3h7l4 4v14H7zM14 3v5h5"></path>
             </svg>
             <span>
-              <strong>{resource.title}</strong>
-              <small>{resource.type} · {resource.subject}</small>
+              <strong lang={resource.titleLang}>{resource.title}</strong>
+              <small>{resource.type} · {resource.subject}{!resource.term && ` · ${resource.grade}`}</small>
             </span>
           </span>
 
           <span class="resource-summary">
             {resource.description}
-            <b>Let's study <span aria-hidden="true">↗</span></b>
+            <b>{resource.type === 'PDF' ? 'Open PDF' : "Let's study"} <span aria-hidden="true">↗</span></b>
           </span>
         </a>
       ))

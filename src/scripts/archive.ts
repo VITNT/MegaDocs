@@ -3,8 +3,15 @@ interface ArchiveState {
   term: string | null;
 }
 
+const isJomlery = document.querySelector('#top')?.getAttribute('data-library') === 'jomlery';
+const libraryTitle = isJomlery ? 'Jomlery' : 'Exam Archive';
+const libraryDescription = isJomlery
+  ? 'Khmer textbook answer keys, organized by grade and subject. Choose a PDF to read in a new tab.'
+  : 'Past exam notes across all available grades and terms.';
+const searchHint = isJomlery ? 'Search all Khmer Answer PDFs.' : 'Search across all grades and terms.';
+const availableGrades = [...document.querySelectorAll<HTMLElement>('.grade-button')].map((button) => button.dataset.grade);
 const requestedGrade = new URLSearchParams(window.location.search).get('grade');
-const initialGrade = ['Grade 12', 'Grade 11', 'Grade 10', 'Grade 9'].includes(requestedGrade ?? '')
+const initialGrade = availableGrades.includes(requestedGrade ?? '')
   ? requestedGrade
   : null;
 
@@ -71,15 +78,17 @@ function updatePageCopy(visibleResources: number): void {
   const isGrade = Boolean(state.grade && !state.term);
 
   pageTitle.textContent = isArchive
-      ? 'Exam Archive'
+      ? libraryTitle
       : isGrade
         ? state.grade
         : `${state.grade} — ${state.term}`;
 
   if (isArchive) {
-    pageDescription.textContent = 'Past exam notes across all available grades and terms.';
+    pageDescription.textContent = libraryDescription;
   } else if (isGrade) {
-    pageDescription.textContent = `Past exam notes available for ${state.grade}.`;
+    pageDescription.textContent = isJomlery
+      ? visibleResources ? `Textbook answer keys available for ${state.grade}.` : `Answer keys for ${state.grade} are coming soon.`
+      : `Past exam notes available for ${state.grade}.`;
 
   } else if (visibleResources > 0) {
     pageDescription.textContent = 'Revision notes for this exam term.';
@@ -89,6 +98,10 @@ function updatePageCopy(visibleResources: number): void {
 
   resourceCount.textContent = `${visibleResources} document${visibleResources === 1 ? '' : 's'}`;
   emptyState.hidden = visibleResources !== 0;
+  if (isJomlery) {
+    emptyState.querySelector('h3')!.textContent = 'Answer keys coming soon';
+    emptyState.querySelector('p')!.textContent = 'No PDFs have been added for this grade yet.';
+  }
 }
 
 function updateBreadcrumbs(): void {
@@ -110,7 +123,8 @@ function updateNavigation(): void {
   gradeButtons.forEach((button) => {
     const grade = button.dataset.grade ?? '';
     button.classList.toggle('active', grade === state.grade);
-    button.setAttribute('aria-expanded', String(openGrades.has(grade)));
+    if (isJomlery) button.setAttribute('aria-pressed', String(grade === state.grade));
+    else button.setAttribute('aria-expanded', String(openGrades.has(grade)));
     const drawer = document.getElementById(button.getAttribute('aria-controls') ?? '');
     if (drawer) drawer.inert = !openGrades.has(grade);
   });
@@ -144,6 +158,15 @@ function scrollToTop(): void {
 gradeButtons.forEach((button) => {
   button.addEventListener('click', () => {
     const grade = button.dataset.grade ?? '';
+
+    if (isJomlery) {
+      state.grade = grade;
+      state.term = null;
+      render();
+      closeMenu();
+      scrollToTop();
+      return;
+    }
 
     if (openGrades.has(grade)) {
       openGrades.delete(grade);
@@ -185,14 +208,15 @@ function updateSearch(): void {
     link.className = 'search-result';
     const title = document.createElement('strong');
     title.textContent = row.querySelector('strong')?.textContent ?? '';
+    title.lang = row.querySelector('strong')?.lang ?? '';
     const context = document.createElement('small');
-    context.textContent = `${row.dataset.grade} · ${row.dataset.term} · ${row.querySelector('small')?.textContent}`;
+    context.textContent = [row.dataset.term && row.dataset.grade, row.dataset.term, row.querySelector('small')?.textContent].filter(Boolean).join(' · ');
     link.append(title, context);
     searchResults.append(link);
   });
-  searchStatus.textContent = !words.length ? 'Search across all grades and terms.'
+  searchStatus.textContent = !words.length ? searchHint
     : matches.length ? `${matches.length} document${matches.length === 1 ? '' : 's'} found`
-    : 'No documents found. Try a different title, grade, term, or subject.';
+    : `No documents found. Try a different title, grade, ${isJomlery ? 'or subject.' : 'term, or subject.'}`;
 }
 
 function openSearch(): void {
